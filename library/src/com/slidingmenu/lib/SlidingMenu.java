@@ -433,6 +433,11 @@ public class SlidingMenu extends RelativeLayout {
 	public boolean isSlidingEnabled() {
 		return mViewAbove.isSlidingEnabled();
 	}
+	
+    public void wiggleBehind() {
+        if (!isMenuShowing())
+            mViewAbove.wiggle();
+    }
 
 	/**
 	 * Sets which side the SlidingMenu should appear on.
