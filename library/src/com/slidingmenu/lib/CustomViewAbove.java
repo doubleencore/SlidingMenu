@@ -168,7 +168,7 @@ public class CustomViewAbove extends ViewGroup {
 		mNormalScroller = new Scroller(context, sInterpolator);
 		mWiggleInterpolator = new WiggleInterpolator();
 		mWiggleScroller = new Scroller(context, mWiggleInterpolator);
-	
+		mScroller = mNormalScroller;
 		
 		final ViewConfiguration configuration = ViewConfiguration.get(context);
 		mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
@@ -558,9 +558,7 @@ public class CustomViewAbove extends ViewGroup {
 			int y = mScroller.getCurrY();
 			
 			if (mScroller == mWiggleScroller) {
-			    mWiggleInterpolator.setEndReached(false);
 			    mScroller = mNormalScroller;
-			    x = getBehindWidth();
 			}
 			
 			if (oldX != x || oldY != y) {
@@ -1028,9 +1026,9 @@ public class CustomViewAbove extends ViewGroup {
             setScrollingCacheEnabled(false);
             return;
         }
-        int sx = getScrollX();
+        int sx = -mViewBehind.getBehindWidth() / 3;
         int sy = getScrollY();
-        int dx = 0 - sx / 3;
+        int dx = -sx;
         int dy = sy;
         if (dx == 0 && dy == 0) {
             completeScroll();
@@ -1043,6 +1041,5 @@ public class CustomViewAbove extends ViewGroup {
         mScroller = mWiggleScroller;
         mScroller.startScroll(sx, sy, dx, dy, 1500);
         invalidate();
-    }	    
-
+    }
 }

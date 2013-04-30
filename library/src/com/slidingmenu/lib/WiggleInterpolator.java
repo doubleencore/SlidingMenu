@@ -6,7 +6,6 @@ import android.view.animation.DecelerateInterpolator;
 
 public class WiggleInterpolator implements Interpolator {
 
-    private boolean mReached = false;
     private Interpolator mDecelerateInterpolator = new DecelerateInterpolator();
     private Interpolator mBounceInterpolator = new BounceInterpolator();
 
@@ -16,18 +15,10 @@ public class WiggleInterpolator implements Interpolator {
         // - mDecelerateInterpolator for t < 0.33
         // - mBounceInterpolator for t >= 0.33
         if (t < 0.33) {
-            return mDecelerateInterpolator.getInterpolation(t / 0.33f);
+            return 1f - mDecelerateInterpolator.getInterpolation(t / 0.33f);
         } else {
-            return 1f - mBounceInterpolator.getInterpolation((t - 0.33f) / 0.67f);
+            return mBounceInterpolator.getInterpolation((t - 0.33f) / 0.67f);
         }
-    }
-
-    public boolean endReached() {
-        return mReached;
-    }
-
-    public void setEndReached(boolean set) {
-        mReached = set;
     }
 
 }
